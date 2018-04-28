@@ -1,4 +1,5 @@
 # csv-treemap-chart  [![version][version-badge]][CHANGELOG] [![license][license-badge]][LICENSE]
+> Vue JS project which allows users to upload a CSV file and represent data in the form of a treemap
 
 ## Forked from [Vue Light Bootstrap Dashboard](vuejs.creative-tim.com/vue-light-bootstrap-dashboard) [![version][version-badge]][CHANGELOG] [![license][license-badge]][LICENSE]
 
