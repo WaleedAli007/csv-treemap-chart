@@ -1,2 +1,2 @@
-src/main/resources/static/* linguist-vendored
+static/* linguist-vendored
 *.vue linguist-language=JavaScript
