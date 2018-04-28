@@ -1,4 +1,6 @@
-# [Vue Light Bootstrap Dashboard](vuejs.creative-tim.com/vue-light-bootstrap-dashboard) [![version][version-badge]][CHANGELOG] [![license][license-badge]][LICENSE]
+# csv-treemap-chart  [![version][version-badge]][CHANGELOG] [![license][license-badge]][LICENSE]
+
+## Forked from [Vue Light Bootstrap Dashboard](vuejs.creative-tim.com/vue-light-bootstrap-dashboard) [![version][version-badge]][CHANGELOG] [![license][license-badge]][LICENSE]
 
 > Admin dashboard based on light bootstrap dashboard UI template + vue-router
 
