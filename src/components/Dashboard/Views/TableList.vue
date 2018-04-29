@@ -54,7 +54,7 @@
       return {
         file: null,
         data: [],
-        tableColumns: ['Name', 'Fields'],
+        tableColumns: ['Name', 'Fields', 'Actions'],
       }
     },
     mounted () {
