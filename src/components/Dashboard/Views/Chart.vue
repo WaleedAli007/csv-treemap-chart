@@ -3,7 +3,15 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
+          <div v-if="chartData.length == 0">
+              <h3>No Data. Please Upload a csv file first</h3>
+          </div>
           <svg width="900" height="570"></svg>
+          <!-- <form>
+            <label><input type="radio" name="mode" value="sumBySize" checked> CPC</label>
+            <label><input type="radio" name="mode" value="sumByCount"> Competition</label>
+            <label><input type="radio" name="mode" value="sumBySearchVolume"> Search Volume</label>
+          </form> -->
         </div>
       </div>
     </div>
@@ -30,24 +38,19 @@ import { mapGetters } from 'vuex'
     },
     computed: {
         ...mapGetters([
-        'chartData'
+        'chartData',
+        'currentChart'
         ]),
     },
     mounted () {
+        let data = this.currentChart
         console.log(this.chartData)
-        let data = {
-            keyword: 'apartments for rent in miami',
-            searchVolume: 22200,
-            cpc: 1.16,
-            competition: 0.7
-        }
         this.svg = d3.select('svg')
         this.width = +this.svg.attr('width'),
         this.height = +this.svg.attr('height')
-        console.log(this.width)
         this.fader = (color) => { return  d3.interpolateRgb(color, '#fff')(0.2) }
         this.color = d3.scaleOrdinal(d3.schemeCategory10.map(this.fader))
-        this.format = d3.format(',d')
+        this.format = d3.format('.3n')
 
         this.treemap = d3.treemap()
                             .tile(d3.treemapResquarify)
@@ -56,7 +59,7 @@ import { mapGetters } from 'vuex'
                             .paddingInner(1)
         
         this.root = d3.hierarchy(data)
-                        .eachBefore((d) => { d.data.id = (d.parent ? d.parent.data.id + '.' : '') + d.data.keyword })
+                        .eachBefore((d) => { d.data.id = (d.parent ? d.parent.data.id + '.' : '') + d.data.name })
                         .sum(this.sumBySize)
                         .sort((a, b) => { return b.height - a.height || b.value - a.value })
         
@@ -70,7 +73,7 @@ import { mapGetters } from 'vuex'
                     .attr('id', (d) => { return d.data.id })
                     .attr('width', (d) => { return d.x1 - d.x0 })
                     .attr('height', (d) => { return d.y1 - d.y0 })
-                    .attr('fill', (d) => { console.log(d); return this.color(d.data.id)})
+                    .attr('fill', (d) => { console.log(d); return this.color(d.parent.data.id)})
 
         this.cell.append("clipPath")
             .attr('id', (d) => { return `clip-${d.data.id}` })
@@ -79,9 +82,9 @@ import { mapGetters } from 'vuex'
 
         this.cell.append('text')
             .attr('clip-path', (d) => { return `url(#clip-${d.data.id})` })
-            .selectAll('tspan')
-            .data((d) => { return d.data.keyword.split(/(?=[A-Z][^A-Z])/g) })
-            .enter().append('tspan')
+          .selectAll('tspan')
+            .data((d) => { return d.data.name.split(/(?=[A-Z][^A-Z])/g) })
+          .enter().append('tspan')
             .attr('x', 4)
             .attr('y', (d, i) => { return 13 + i * 10 })
             .text((d) => { return d })
@@ -90,7 +93,7 @@ import { mapGetters } from 'vuex'
             .text((d) => { return d.data.id + '\n' + this.format(d.value) });
 
         d3.selectAll("input")
-            .data([this.sumBySize, this.sumByCount], function(d) { return d ? d.keyword : this.value; })
+            .data([this.sumBySize, this.sumByCount], function(d) { return d ? d.name : this.value; })
             .on('change', changed);
 
         this.timeout = d3.timeout(function() {
@@ -114,10 +117,16 @@ import { mapGetters } from 'vuex'
     },
     methods: {
         sumByCount(d) {
-            return d.children ? 0 : 1
+            d.value = d[" Competition"] || d["Competition"]
+            return d.value
         },
         sumBySize(d) {
-            return d.size
+            d.value = d[" CPC"] || d["CPC"]
+            return d.value
+        },
+        sumBySearchVolume(d) {
+            d.value = d[" Search Volume"] || d["Search Volume"]
+            return d.value
         }
     }
   }

@@ -10,8 +10,9 @@ let syncedData = {
     refreshToken: null
   },
   user: {
-    name: null,
+    username: null,
     _id: null,
+    email: '',
     role: null,
     loggedInAt: null
   }
@@ -19,7 +20,16 @@ let syncedData = {
 
 let notSyncedData = {
   chartData: [],
-  tableData: []
+  tableData: [],
+  currentChart: {
+    "name": "flare",
+    "children": [
+        {
+            "name": "seo",
+            "children": []
+        }
+    ]
+  }
 }
 
 // Sync with local storage.

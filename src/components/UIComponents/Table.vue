@@ -12,6 +12,11 @@
           <pre v-if="typeof item === 'object'">{{itemValue(item, column)}}</pre>
           <template v-else>{{itemValue(item, column)}}</template>
         </td>
+        <td v-if="actions">
+          <div class="font-icon-detail">
+            <a class="btn icon-btn" @click="viewChart(item, index)"><i class="nc-icon nc-chart-pie-35"></i></a>
+          </div>
+        </td>
       </slot>
     </tr>
     </tbody>
@@ -22,15 +27,19 @@
     name: 'l-table',
     props: {
       columns: Array,
-      data: Array
+      data: Array,
+      actions: Boolean
     },
     methods: {
       hasValue (item, column) {
         return item[column.toLowerCase()] !== 'undefined'
       },
       itemValue (item, column) {
-        console.log(item, typeof item)
         return item[column.toLowerCase()]
+      },
+      viewChart (item, index) {
+        this.$store.dispatch('VIEW_CHART', index)
+        this.$emit('onChartView')
       }
     }
   }

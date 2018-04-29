@@ -7,5 +7,8 @@ export const getters = {
   },
   tableData (state) {
     return state.tableData
+  },
+  currentChart (state) {
+    return state.currentChart
   }
 }

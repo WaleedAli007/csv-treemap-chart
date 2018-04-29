@@ -27,7 +27,9 @@
             <div class="table-responsive">
               <l-table class="table-hover"
                        :columns="tableColumns"
-                       :data="tableData">
+                       :data="tableData"
+                       :actions="true"
+                       @onChartView="onChartView">
               </l-table>
             </div>
           </card>
@@ -85,6 +87,9 @@
           }
         })
         reader.readAsText(fileToLoad)
+      },
+      onChartView () {
+        this.$router.push({name: 'Chart'})
       }
     }
   }

@@ -5,15 +5,15 @@
       <a href="#">
         <img class="avatar border-gray" src="static/img/faces/face-3.jpg" alt="..."/>
 
-        <h4 class="title">Mike Andrew<br />
-          <small>michael24</small>
+        <h4 class="title">{{user.username}}<br />
+          <small>{{user.email}}</small>
         </h4>
       </a>
     </div>
-    <p class="description text-center"> "Lamborghini Mercy <br>
+    <!-- <p class="description text-center"> "Lamborghini Mercy <br>
       Your chick she so thirsty <br>
       I'm in that two seat Lambo"
-    </p>
+    </p> -->
     <div slot="footer" class="text-center">
       <button href="#" class="btn btn-simple"><i class="fa fa-facebook-square"></i></button>
       <button href="#" class="btn btn-simple"><i class="fa fa-twitter"></i></button>
@@ -23,6 +23,8 @@
 </template>
 <script>
   import Card from 'src/components/UIComponents/Cards/Card.vue'
+  import { mapGetters } from 'vuex'
+
   export default {
     components: {
       Card
@@ -44,6 +46,11 @@
           }
         ]
       }
+    },
+    computed: {
+      ...mapGetters([
+        'user'
+      ])
     },
     methods: {
       getClasses (index) {

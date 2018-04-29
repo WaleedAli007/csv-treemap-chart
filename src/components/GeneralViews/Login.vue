@@ -68,6 +68,7 @@ export default {
         this.loadingState = true
         setTimeout (() => {
           if (this.credentials.username === 'amineketo' && this.credentials.password === '1234') {
+            this.$store.dispatch('UPDATE_USER', this.credentials)
             this.$router.push({path: '/admin'})
           } else {
             this.error = 'Username or Password is not valid'
